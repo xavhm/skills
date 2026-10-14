@@ -21,5 +21,5 @@ Updated by `scripts/vendor.sh`, do not edit by hand.
 
 | Skill | Category | Source | Path in source | Commit | Date |
 | ----- | -------- | ------ | -------------- | ------ | ---- |
-| `modern-web-guidance` | - | googlechrome/modern-web-guidance | `skills/modern-web-guidance` | `b31dc0a` | 2026-10-14 |
+| `modern-web-guidance` | software-engineering | googlechrome/modern-web-guidance | `skills/modern-web-guidance` | `b31dc0a` | 2026-10-14 |
 <!-- vendored:end -->
