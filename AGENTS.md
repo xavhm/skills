@@ -5,19 +5,20 @@ This repo is a collection of agent skills, installed into other projects with `n
 There are two kinds of skills:
 
 - **Personal**: written here, edited freely.
-- **Vendored**: copied from a third-party repo with `scripts/vendor.sh`. Never edit them by hand, the next update overwrites the changes.
+- **Vendored**: copied from a third-party repo with `scripts/skills.sh`. Never edit them by hand, the next update overwrites the changes.
 
 ## Rules
 
 - Do not run `npx skills add` inside this repo: it installs into `.agents/` and `.claude/`, which `npx skills` cannot discover as a source.
-- To add a third-party skill: `scripts/vendor.sh <owner/repo | git-url> <skill> [category]`. It copies the skill into `skills/[<category>/]<skill>/` and updates the table below.
-- To update all third-party skills: `scripts/vendor.sh` (no arguments). It re-vendors every skill listed in the table below, in its recorded category.
+- To add a third-party skill: `scripts/skills.sh <owner/repo | git-url> <skill> [category]`. It copies the skill into `skills/[<category>/]<skill>/` and updates the table below.
+- To update all third-party skills: `scripts/skills.sh` (no arguments). It re-vendors every skill listed in the table below, in its recorded category.
 - To move a vendored skill to another category, re-run the add command with the new category.
+- To remove a skill, vendored or personal: `scripts/remove.sh <skill>`. It deletes the skill in whatever category it lives (and the category folder if it ends up empty) and its row in the table below. Do not delete vendored skills by hand, a leftover row would bring them back on the next update.
 - To add a personal skill: create `skills/[<category>/]<name>/SKILL.md`. Do not add it to the table below.
 
 ## Vendored skills
 
-Updated by `scripts/vendor.sh`, do not edit by hand.
+Updated by `scripts/skills.sh`, do not edit by hand.
 
 | Skill | Category | Source | Path in source | Commit | Date |
 | ----- | -------- | ------ | -------------- | ------ | ---- |

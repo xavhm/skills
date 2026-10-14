@@ -2,8 +2,8 @@
 # Vendor third-party skills into skills/ and record their sources in AGENTS.md.
 #
 # Usage:
-#   scripts/vendor.sh                                          update every skill listed in AGENTS.md
-#   scripts/vendor.sh <owner/repo | git-url> <skill> [category]   add or update a single skill
+#   scripts/skills.sh                                          update every skill listed in AGENTS.md
+#   scripts/skills.sh <owner/repo | git-url> <skill> [category]   add or update a single skill
 #
 # With a category, the skill goes to skills/<category>/<skill>/, otherwise skills/<skill>/.
 set -euo pipefail

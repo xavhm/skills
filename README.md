@@ -48,8 +48,8 @@ Third-party skills are vendored with a script, because `npx skills add` installs
 **Add one:**
 
 ```bash
-scripts/vendor.sh <owner/repo | git-url> <skill> [category]
-# e.g. scripts/vendor.sh googlechrome/modern-web-guidance modern-web-guidance software-engineering
+scripts/skills.sh <owner/repo | git-url> <skill> [category]
+# e.g. scripts/skills.sh googlechrome/modern-web-guidance modern-web-guidance software-engineering
 ```
 
 It copies the skill into `skills/[<category>/]<skill>/` and adds its source, category, path, commit and date to the table in [AGENTS.md](AGENTS.md). Review with `git diff`, then commit. To move a skill to another category, re-run the command with the new one.
@@ -57,9 +57,17 @@ It copies the skill into `skills/[<category>/]<skill>/` and adds its source, cat
 **Update all:**
 
 ```bash
-scripts/vendor.sh
+scripts/skills.sh
 ```
 
 It re-fetches every skill listed in `AGENTS.md`, in its recorded category, and refreshes their rows.
 
-The `AGENTS.md` table is maintained by the script, and vendored skills are overwritten on update, so don't edit either by hand.
+### Removing skills
+
+```bash
+scripts/remove.sh <skill>
+```
+
+It deletes the skill wherever it lives (personal or vendored, in any category), removes the category folder if it ends up empty, and drops the skill's row from the `AGENTS.md` table so `scripts/skills.sh` won't bring it back. It asks for confirmation; use `--yes` to skip it or `--dry-run` to only preview. Review with `git diff`, then commit.
+
+The `AGENTS.md` table is maintained by the scripts, and vendored skills are overwritten on update, so don't edit either by hand.
