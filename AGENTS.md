@@ -51,4 +51,10 @@ Updated by `scripts/skills.sh`, do not edit by hand.
 | `animation-performance` | frontend-engineering | emilkowalski/skills | `skills/animation-performance` | `2d22863` | 2026-10-14 |
 | `improve-animations` | frontend-engineering | emilkowalski/skills | `skills/improve-animations` | `2d22863` | 2026-10-14 |
 | `find-animation-opportunities` | frontend-engineering | emilkowalski/skills | `skills/find-animation-opportunities` | `2d22863` | 2026-10-14 |
+| `image-to-code-skill` | frontend-engineering | Leonxlnx/taste-skill | `skills/image-to-code-skill` | `a60a36d` | 2026-10-14 |
+| `imagegen-frontend-mobile` | frontend-engineering | Leonxlnx/taste-skill | `skills/imagegen-frontend-mobile` | `a60a36d` | 2026-10-14 |
+| `imagegen-frontend-web` | frontend-engineering | Leonxlnx/taste-skill | `skills/imagegen-frontend-web` | `a60a36d` | 2026-10-14 |
+| `minimalist-skill` | frontend-engineering | Leonxlnx/taste-skill | `skills/minimalist-skill` | `a60a36d` | 2026-10-14 |
+| `redesign-skill` | frontend-engineering | Leonxlnx/taste-skill | `skills/redesign-skill` | `a60a36d` | 2026-10-14 |
+| `taste-skill-v1` | frontend-engineering | Leonxlnx/taste-skill | `skills/taste-skill-v1` | `a60a36d` | 2026-10-14 |
 <!-- vendored:end -->
