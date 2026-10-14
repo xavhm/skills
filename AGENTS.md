@@ -47,4 +47,8 @@ Updated by `scripts/skills.sh`, do not edit by hand.
 | `triage` | engineering-workflow | mattpocock/skills | `skills/engineering/triage` | `49dd158` | 2026-10-14 |
 | `wayfinder` | engineering-workflow | mattpocock/skills | `skills/engineering/wayfinder` | `49dd158` | 2026-10-14 |
 | `prototype` | engineering-workflow | mattpocock/skills | `skills/engineering/prototype` | `49dd158` | 2026-10-14 |
+| `animate` | frontend-engineering | emilkowalski/skills | `skills/animate` | `2d22863` | 2026-10-14 |
+| `animation-performance` | frontend-engineering | emilkowalski/skills | `skills/animation-performance` | `2d22863` | 2026-10-14 |
+| `improve-animations` | frontend-engineering | emilkowalski/skills | `skills/improve-animations` | `2d22863` | 2026-10-14 |
+| `find-animation-opportunities` | frontend-engineering | emilkowalski/skills | `skills/find-animation-opportunities` | `2d22863` | 2026-10-14 |
 <!-- vendored:end -->
