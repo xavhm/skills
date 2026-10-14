@@ -14,7 +14,7 @@ agents=$root/AGENTS.md
 # No arguments: re-vendor every row of the AGENTS.md table
 if [ $# -eq 0 ]; then
   rows=$(awk '/<!-- vendored:end -->/ { exit } /^\| `/ { print }' "$agents")
-  [ -n "$rows" ] || { echo "No vendored skills listed in AGENTS.md" >&2; exit 0; }
+  [ -n "$rows" ] || { echo "Error: no vendored skills listed in AGENTS.md, nothing to update" >&2; exit 1; }
 
   failed=()
   while IFS='|' read -r _ skill category repo _; do
@@ -26,7 +26,7 @@ if [ $# -eq 0 ]; then
   done <<< "$rows"
 
   if [ ${#failed[@]} -gt 0 ]; then
-    echo "Failed: ${failed[*]}" >&2
+    echo "Error: failed to vendor: ${failed[*]}" >&2
     exit 1
   fi
   exit 0
@@ -53,7 +53,10 @@ esac
 tmp=$(mktemp -d)
 trap 'rm -rf "$tmp"' EXIT
 
-git clone --quiet --depth 1 "$url" "$tmp/src"
+git clone --quiet --depth 1 "$url" "$tmp/src" || {
+  echo "Error: could not clone $repo ($url)" >&2
+  exit 1
+}
 sha=$(git -C "$tmp/src" rev-parse --short HEAD)
 
 # Shallowest directory named <skill> that contains a SKILL.md
@@ -64,12 +67,12 @@ src=$(
       [ "$(basename "$d")" = "$skill" ] && echo "$d"
     done |
     awk '{ print gsub("/", "/"), $0 }' | sort -n | head -1 | cut -d' ' -f2-
-)
+) || src=
 # Fallback: the repo itself is the skill
 if [ -z "$src" ] && [ -f "$tmp/src/SKILL.md" ]; then
   src=$tmp/src
 fi
-[ -n "$src" ] || { echo "Skill '$skill' not found in $repo" >&2; exit 1; }
+[ -n "$src" ] || { echo "Error: skill '$skill' not found in $repo (no directory named '$skill' containing a SKILL.md)" >&2; exit 1; }
 
 rel=${src#"$tmp/src"}
 rel=${rel#/}
@@ -90,6 +93,11 @@ mkdir -p "$(dirname "$dest")"
 rm -rf "$dest"
 cp -R "$src" "$dest"
 rm -rf "$dest/.git"
+
+grep -q '<!-- vendored:end -->' "$agents" || {
+  echo "Error: <!-- vendored:end --> marker missing in AGENTS.md, cannot record $skill" >&2
+  exit 1
+}
 
 # Upsert the skill's row in the vendored table of AGENTS.md
 row="| \`$skill\` | ${category:--} | $repo | \`$rel\` | \`$sha\` | $(date +%F) |"
