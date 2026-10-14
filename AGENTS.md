@@ -46,4 +46,5 @@ Updated by `scripts/skills.sh`, do not edit by hand.
 | `to-tickets` | engineering-workflow | mattpocock/skills | `skills/engineering/to-tickets` | `49dd158` | 2026-10-14 |
 | `triage` | engineering-workflow | mattpocock/skills | `skills/engineering/triage` | `49dd158` | 2026-10-14 |
 | `wayfinder` | engineering-workflow | mattpocock/skills | `skills/engineering/wayfinder` | `49dd158` | 2026-10-14 |
+| `prototype` | engineering-workflow | mattpocock/skills | `skills/engineering/prototype` | `49dd158` | 2026-10-14 |
 <!-- vendored:end -->
