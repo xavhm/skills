@@ -28,4 +28,5 @@ Updated by `scripts/vendor.sh`, do not edit by hand.
 | `pinia-colada` | software-engineering | secondsky/claude-skills | `plugins/pinia-colada/skills/pinia-colada` | `8837836` | 2026-10-14 |
 | `vue-router-best-practices` | software-engineering | vuejs-ai/skills | `skills/vue-router-best-practices` | `c9d355f` | 2026-10-14 |
 | `vue-testing-best-practices` | software-engineering | vuejs-ai/skills | `skills/vue-testing-best-practices` | `c9d355f` | 2026-10-14 |
+| `vue-best-practices` | software-engineering | vuejs-ai/skills | `skills/vue-best-practices` | `c9d355f` | 2026-10-14 |
 <!-- vendored:end -->
