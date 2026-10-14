@@ -30,4 +30,19 @@ Updated by `scripts/vendor.sh`, do not edit by hand.
 | `vue-testing-best-practices` | software-engineering | vuejs-ai/skills | `skills/vue-testing-best-practices` | `c9d355f` | 2026-10-14 |
 | `vue-best-practices` | software-engineering | vuejs-ai/skills | `skills/vue-best-practices` | `c9d355f` | 2026-10-14 |
 | `no-ai-slop` | content | petergyang/no-ai-slop | `skills/no-ai-slop` | `000650b` | 2026-10-14 |
+| `grill-me` | engineering-workflow | mattpocock/skills | `skills/productivity/grill-me` | `49dd158` | 2026-10-14 |
+| `grilling` | engineering-workflow | mattpocock/skills | `skills/productivity/grilling` | `49dd158` | 2026-10-14 |
+| `handoff` | engineering-workflow | mattpocock/skills | `skills/productivity/handoff` | `49dd158` | 2026-10-14 |
+| `code-review` | engineering-workflow | mattpocock/skills | `skills/engineering/code-review` | `49dd158` | 2026-10-14 |
+| `codebase-design` | engineering-workflow | mattpocock/skills | `skills/engineering/codebase-design` | `49dd158` | 2026-10-14 |
+| `domain-modeling` | engineering-workflow | mattpocock/skills | `skills/engineering/domain-modeling` | `49dd158` | 2026-10-14 |
+| `grill-with-docs` | engineering-workflow | mattpocock/skills | `skills/engineering/grill-with-docs` | `49dd158` | 2026-10-14 |
+| `implement` | engineering-workflow | mattpocock/skills | `skills/engineering/implement` | `49dd158` | 2026-10-14 |
+| `improve-codebase-architecture` | engineering-workflow | mattpocock/skills | `skills/engineering/improve-codebase-architecture` | `49dd158` | 2026-10-14 |
+| `setup-matt-pocock-skills` | engineering-workflow | mattpocock/skills | `skills/engineering/setup-matt-pocock-skills` | `49dd158` | 2026-10-14 |
+| `tdd` | engineering-workflow | mattpocock/skills | `skills/engineering/tdd` | `49dd158` | 2026-10-14 |
+| `to-spec` | engineering-workflow | mattpocock/skills | `skills/engineering/to-spec` | `49dd158` | 2026-10-14 |
+| `to-tickets` | engineering-workflow | mattpocock/skills | `skills/engineering/to-tickets` | `49dd158` | 2026-10-14 |
+| `triage` | engineering-workflow | mattpocock/skills | `skills/engineering/triage` | `49dd158` | 2026-10-14 |
+| `wayfinder` | engineering-workflow | mattpocock/skills | `skills/engineering/wayfinder` | `49dd158` | 2026-10-14 |
 <!-- vendored:end -->
