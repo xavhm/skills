@@ -23,4 +23,5 @@ Updated by `scripts/vendor.sh`, do not edit by hand.
 | ----- | -------- | ------ | -------------- | ------ | ---- |
 | `modern-web-guidance` | software-engineering | googlechrome/modern-web-guidance | `skills/modern-web-guidance` | `b31dc0a` | 2026-10-14 |
 | `feature-sliced-design` | software-engineering | feature-sliced/skills | `feature-sliced-design` | `5e95aae` | 2026-10-14 |
+| `shadcn-vue` | software-engineering | unovue/shadcn-vue | `skills/shadcn-vue` | `b251d9f` | 2026-10-14 |
 <!-- vendored:end -->
