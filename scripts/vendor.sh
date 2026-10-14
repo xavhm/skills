@@ -62,9 +62,9 @@ sha=$(git -C "$tmp/src" rev-parse --short HEAD)
 # Shallowest directory named <skill> that contains a SKILL.md
 src=$(
   find "$tmp/src" -name .git -prune -o -type f -name SKILL.md -print |
-    while read -r f; do
+    while IFS= read -r f; do
       d=$(dirname "$f")
-      [ "$(basename "$d")" = "$skill" ] && echo "$d"
+      if [ "$(basename "$d")" = "$skill" ]; then echo "$d"; fi
     done |
     awk '{ print gsub("/", "/"), $0 }' | sort -n | head -1 | cut -d' ' -f2-
 ) || src=
