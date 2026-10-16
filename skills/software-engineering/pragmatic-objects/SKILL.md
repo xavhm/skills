@@ -1,65 +1,30 @@
 ---
 name: pragmatic-objects
-description: Applique les principes de conception orientée objet "Pragmatic Objects" (encapsulation stricte, Tell-Don't-Ask, Domain-Driven Design, SOLID, Value Objects, composition plutôt qu'héritage). À UTILISER SYSTÉMATIQUEMENT dès que l'utilisateur conçoit des classes/objets, fait une revue de code orientée objet, discute d'architecture, de modélisation de domaine (DDD), de refactoring vers plus d'encapsulation, ou mentionne des getters/setters, de l'héritage, du couplage, SOLID, Value Objects, ou "Pragmatic Objects" / "Elegant Objects". S'applique à tout langage OO (TypeScript, Java, C#, PHP...).
+description: Concevoir des objets et classes TypeScript avec des règles pragmatiques d'encapsulation, de validité et de composition. À appliquer lors de la création ou de la modification d'objets métier, de value objects et de leurs contrats.
 ---
 
-# Pragmatic Objects — conception orientée objet
+# Pragmatic Objects
 
-Synthèse du livre [Pragmatic Objects](https://book.pragmatic-objects.com/) d'Anthony (Ancyr Academy). Philosophie : la programmation orientée objet (OOP) n'est qu'une boîte à outils ; centrée sur le **comportement** et la **communication par messages**, pas sur le regroupement de données.
+Appliquer ces règles aux nouveaux objets TypeScript et aux objets modifiés dans le périmètre demandé. Ce sont des choix par défaut : respecter les contraintes du projet sans imposer une architecture complète.
 
-Ce ne sont pas des règles dogmatiques mais des **heuristiques** : à appliquer par défaut, à violer consciemment quand le contexte l'exige (TDD, contraintes de framework/ORM, frontières du système).
+## Règles
 
-## Idée centrale
+1. **Choisir la forme la plus simple.** Utiliser un objet littéral avec un `type` ou une `interface` pour des données sans comportement (DTO, configuration, résultat). Créer une classe ou une factory avec état privé lorsqu'il faut protéger des invariants ou porter un comportement métier. Garder les calculs indépendants sous forme de fonctions pures.
 
-> Un objet n'est pas défini par ce qu'il **est**, mais par le service qu'il rend aux autres objets.
+2. **Nommer selon le métier.** Donner à chaque objet un rôle cohérent et des méthodes exprimant une intention : `reserve()`, `rename()`, `deposit()`. Éviter les objets fourre-tout (`Manager`, `Utils`, services sans cohésion) et les modèles universels couvrant plusieurs contextes métier.
 
-Deux conséquences directes à garder en tête à chaque conception de classe :
+3. **Protéger la représentation interne.** Garder l'état privé et déplacer les règles dans l'objet qui le possède : `user.deposit(amount)` plutôt que `user.wallet.balance += amount`. Éviter les getters/setters mécaniques et la navigation dans les détails internes des collaborateurs. Les requêtes et conversions explicites (`canReserve()`, `toSeconds()`) restent légitimes ; renommer un getter ne suffit pas à encapsuler.
 
-1. **Encapsulation d'abord** : un objet protège sa représentation interne. Les autres objets ne connaissent que son contrat public (méthodes), jamais sa structure.
-2. **Réduire la connaissance ("knowledge")** : chaque bit d'information qu'un objet A connaît sur un objet B est du couplage. Moins on en sait sur les autres, plus on est libre de changer.
+4. **Garantir un état valide.** Vérifier les invariants à la construction ou dans une factory, puis à chaque transition. Valider avant de muter ; un échec laisse l'objet inchangé. Éviter les objets partiellement initialisés et les appels obligatoires à `init()`. Valider les données externes à l'exécution : les types TypeScript ne les valident pas.
 
-→ Détails et fondations théoriques : [`references/design-philosophy.md`](references/design-philosophy.md)
+5. **Créer des value objects quand ils apportent une règle.** Encapsuler les valeurs portant validation, unités, calculs ou comparaisons métier (`Duration`, `Money`). Les rendre immuables, retourner une nouvelle valeur après une opération et comparer par valeur avec `equals()`, pas par référence avec `===`. Ne pas envelopper automatiquement chaque primitive ou collection ; créer une collection métier si elle porte ses propres règles.
 
-## Checklist rapide (à appliquer à chaque classe/objet)
+6. **Maîtriser les mutations et l'absence.** Préférer `readonly`, en sachant qu'il est superficiel ; copier les tableaux, objets ou `Date` mutables reçus ou exposés si nécessaire. Garder les requêtes sans effet de bord et les mutations explicites. Représenter une absence légitime par une union (`User | undefined`) ou un résultat discriminé, sans `!` ou cast pour la masquer.
 
-| # | Vérifier que... | Si non → | Réf. |
-|---|---|---|---|
-| 1 | Aucun getter ne renvoie une valeur brute interne | Internaliser le comportement dans l'objet, ou exposer une interface maintenue (`toX()`, `asX()`) | practices-encapsulation |
-| 2 | Aucun setter ; les mutations sont des verbes métier (`rename()`, pas `setName()`) | Remplacer par une méthode comportementale ; préférer retourner une nouvelle instance (immutabilité) | practices-encapsulation |
-| 3 | Aucun `instanceof` / type-check / cast | Remplacer par du polymorphisme (méthode sur une interface commune) | practices-encapsulation |
-| 4 | Pas de chaînage > 2 points (`a.b().c().d()`) | L'objet en sait trop sur la structure interne d'un autre → Loi de Déméter | practices-encapsulation |
-| 5 | Pas de primitive "signifiante" nue (string d'email, number de durée, Date métier...) | Créer un Value Object dédié | practices-modeling |
-| 6 | Aucun objet ne peut être construit dans un état invalide | Valider dans le constructeur (pattern **Always Valid**) | patterns |
-| 7 | Pas de `null` qui traverse la couche domaine | Null uniquement aux frontières ; `Optional`/wrapping dès l'entrée (pattern **Airlocking**) | practices-modeling |
-| 8 | Pas de booléen qui fait basculer le comportement d'une méthode (`if (this.isX) {...} else {...}`) | Objet **indécis** → extraire deux classes distinctes | practices-modeling |
-| 9 | Pas d'héritage d'implémentation entre classes concrètes sans relation "is-a" solide | Préférer composition + délégation, ou interface | practices-structure |
-| 10 | Chaque méthode est soit une commande (mute, ne retourne rien) soit une requête (retourne, ne mute rien) | Séparer (CQS) — exception : création avec retour d'ID/référence | practices-structure |
-| 11 | Les dépendances d'un objet sont explicites (constructeur), jamais récupérées en cachette (statics, singletons, service locator) | Injecter au constructeur | practices-structure |
-| 12 | La création d'objets polymorphiques est séparée de leur usage | Extraire une Factory / Abstract Factory | practices-structure |
-| 13 | Les collections métier ont une classe dédiée, pas un array/Map nu qui se balade | Wrapper en `XxxCollection` avec méthodes métier | practices-modeling |
-| 14 | Le nom d'une classe/variable reflète le vocabulaire du domaine métier (pas `UserService.doStuff()`, pas `dataObj`) | Revoir le nommage avec le domain expert | design-philosophy |
+7. **Rendre les dépendances explicites.** Passer les collaborateurs, l'horloge et les sources d'aléatoire au constructeur ou en paramètre. Utiliser de petits contrats adaptés au consommateur lorsque la substitution est utile. Éviter les dépendances globales cachées ; garder l'assemblage des implémentations hors de leur usage. Les factories nommées (`Duration.fromMinutes()`) sont utiles sans imposer une factory à chaque objet.
 
-## Anti-patterns à repérer immédiatement (drapeaux rouges)
+8. **Préférer la composition.** Déléguer plutôt qu'hériter pour réutiliser du code. Toute implémentation doit respecter le contrat annoncé, y compris erreurs et effets de bord. Extraire une stratégie lorsque des variantes de comportement se répètent ; conserver les unions discriminées et leur narrowing pour des états ou données alternatifs. Un booléen ou un `switch` ne justifie pas seul de nouvelles classes.
 
-- **Getters/Setters bruts** exposant un champ privé sans valeur ajoutée.
-- **`instanceof` / `typeof` / switch sur un type** en dehors d'une factory.
-- **Classes utilitaires statiques** (`XxxHelper`, `XxxUtils`) — cf. `Abandon Statics`.
-- **God Service** (`UserService` avec 15 méthodes sans cohésion) — préférer un objet **Command** par action (`RegisterUserCommand` + son `Handler`).
-- **Modèle "large"** unique portant des responsabilités de plusieurs contextes métier (ex. `Product` qui gère catalogue + stock + livraison) — découper en Bounded Contexts.
-- **Objets anémiques** : classes = sacs de champs + logique procédurale ailleurs.
-- **Héritage pour réutiliser du code** entre classes concrètes sans relation conceptuelle "is-a" réelle — source de couplage maximal (voir *Inheritance Breaks Encapsulation*).
-- **Mutation dispersée** dans une méthode longue (bug classique type kata *Gilded Rose*) — regrouper la mutation à un seul endroit, calculer un delta immuable avant.
+9. **Expliciter les frontières.** Utiliser DTO, conversions ou snapshots pour l'API et la persistance, sans exposer de références mutables internes. Toute reconstruction doit rétablir les invariants. Ne pas imposer CQRS, événements, wrappers ou Command/Handler pour un besoin simple.
 
-## Comment utiliser cette skill
-
-1. **Conception d'un nouveau modèle de domaine** (DDD, agrégats, value objects) → lire [`references/design-philosophy.md`](references/design-philosophy.md) (Domain Modeling, Bounded Contexts, gestion de l'information) puis [`references/practices-modeling.md`](references/practices-modeling.md).
-2. **Revue de code / refactoring orienté objet** → parcourir la checklist ci-dessus, puis approfondir avec [`references/practices-encapsulation.md`](references/practices-encapsulation.md) et [`references/practices-structure.md`](references/practices-structure.md) selon le problème détecté.
-3. **Question sur SOLID** → [`references/solid.md`](references/solid.md).
-4. **Choix d'un pattern objet** (Value Object, Command, Wrapper, Snapshot...) → [`references/patterns.md`](references/patterns.md).
-5. **Exemples de bout en bout** (avant/après, "magic number", conversion Celsius/Fahrenheit, réservation d'école de conduite) → [`references/worked-examples.md`](references/worked-examples.md).
-
-Chaque fichier de référence est autonome : ouvrir uniquement celui pertinent à la tâche en cours plutôt que tout charger.
-
-## Résumé en une phrase
-
-Concevoir des objets qui **se parlent par contrat** (méthodes/comportement), qui **protègent leur état**, qui **n'existent que pour servir d'autres objets**, et dont le vocabulaire **reflète le langage du métier** — pas celui de la base de données.
+Avant de terminer, vérifier : rôle clair, état toujours valide, contrat public minimal, dépendances visibles et aucune abstraction sans besoin concret.
