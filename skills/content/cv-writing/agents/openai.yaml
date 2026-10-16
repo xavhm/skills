@@ -1,0 +1,4 @@
+interface:
+  display_name: "CV Writing Skill"
+  short_description: "Practical resumes, LinkedIn profiles, and cover letters"
+  default_prompt: "Use $cv-writing to write or tailor my resume, adapt it for LinkedIn, or draft a targeted or general-purpose cover letter from my experience."

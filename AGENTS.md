@@ -57,4 +57,5 @@ Updated by `scripts/skills.sh`, do not edit by hand.
 | `minimalist-skill` | frontend-engineering | Leonxlnx/taste-skill | `skills/minimalist-skill` | `a60a36d` | 2026-10-14 |
 | `redesign-skill` | frontend-engineering | Leonxlnx/taste-skill | `skills/redesign-skill` | `a60a36d` | 2026-10-14 |
 | `taste-skill-v1` | frontend-engineering | Leonxlnx/taste-skill | `skills/taste-skill-v1` | `a60a36d` | 2026-10-14 |
+| `nuxt-ui` | frontend-engineering | nuxt/ui | `skills/nuxt-ui` | `21f1aac` | 2026-10-16 |
 <!-- vendored:end -->
